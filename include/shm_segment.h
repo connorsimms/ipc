@@ -1,3 +1,5 @@
+#pragma once
+
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <sys/fcntl.h>
@@ -5,7 +7,7 @@
 #include <string.h>
 
 #include <atomic>
-#include <cerno>
+#include <cerrno>
 #include <string>
 #include <system_error>
 
@@ -45,7 +47,7 @@ public:
 
         if (mapped_ptr_ == MAP_FAILED)
         {
-            mapped_ptr = nullptr;
+            mapped_ptr_ = nullptr;
             throw std::system_error(errno, std::generic_category());
         }
     }
@@ -76,7 +78,7 @@ public:
 
         if (mapped_ptr_ == MAP_FAILED)
         {
-            mapped_ptr = nullptr;
+            mapped_ptr_ = nullptr;
             throw std::system_error(errno, std::generic_category());
         }
     }
@@ -110,4 +112,4 @@ private:
     int shm_fd_{ -1 };              // file descriptor
     std::size_t total_size_;        // size of block in bytes 
     void* mapped_ptr_{ nullptr };   // raw ptr to shm block
-}
+};
