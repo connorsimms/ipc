@@ -13,18 +13,18 @@
 
 struct SharedHeader
 {
-    alignas(64) std::atomic<std::size_t> write_index;
+    alignas(64) std::atomic<std::uint64_t> write_index;
     std::uint32_t magic;
     std::uint32_t version;
-    std::size_t capacity;
-    std::size_t element_size;
-    alignas(64) std::atomic<std::size_t> read_index;
+    std::uint64_t capacity;
+    std::uint64_t element_size;
+    alignas(64) std::atomic<std::uint64_t> read_index;
 };
 
 class SHMSegment
 {
 public:
-    void create(std::string name, std::size_t size)
+    void create(std::string name, std::uint64_t size)
     {
         is_owner_ = true;
         name_ = name;
@@ -109,7 +109,7 @@ public:
 private:
     bool is_owner_{ false };                 // unlink responsibility
     std::string name_;              // name identifier
-    int shm_fd_{ -1 };              // file descriptor
-    std::size_t total_size_;        // size of block in bytes 
+    std::int32_t shm_fd_{ -1 };              // file descriptor
+    std::uint64_t total_size_;        // size of block in bytes 
     void* mapped_ptr_{ nullptr };   // raw ptr to shm block
 };

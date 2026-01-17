@@ -10,6 +10,17 @@ int main()
     SPSCQueue<int> queue{};
     queue.init(&segment, 10u);
 
+    
+    std::cout << "Offset info: ";
+    std::cout << offsetof(SharedHeader, write_index) << '\n';
+    std::cout << offsetof(SharedHeader, magic) << '\n';
+    std::cout << offsetof(SharedHeader, version) << '\n';
+    std::cout << offsetof(SharedHeader, capacity) << '\n';
+    std::cout << offsetof(SharedHeader, element_size) << '\n';
+    std::cout << offsetof(SharedHeader, read_index) << '\n';
+
+    std::cout << sizeof(SharedHeader) << '\n';
+
     int x;
     while (std::cin >> x && x != -1)
     {
