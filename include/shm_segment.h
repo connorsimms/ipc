@@ -11,6 +11,8 @@
 #include <string>
 #include <system_error>
 
+#include "type_info.h"
+
 struct SharedHeader
 {
     alignas(64) std::atomic<std::uint64_t> write_index;
