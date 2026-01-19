@@ -7,7 +7,7 @@ int main()
     SHMSegment segment{};
     segment.create("test_shm", 1024);
 
-    SPSCQueue<int> queue{};
+    SPSCQueue<Trade> queue{};
     queue.init(&segment, 10u);
 
     
@@ -17,18 +17,10 @@ int main()
     std::cout << offsetof(SharedHeader, version) << '\n';
     std::cout << offsetof(SharedHeader, capacity) << '\n';
     std::cout << offsetof(SharedHeader, element_size) << '\n';
+    std::cout << offsetof(SharedHeader, schema) << '\n';
     std::cout << offsetof(SharedHeader, read_index) << '\n';
 
     std::cout << sizeof(SharedHeader) << '\n';
-
-    int x;
-    while (std::cin >> x && x != -1)
-    {
-        if (queue.push(x))
-            std::cout << "Pushed " << x << '\n';
-        else
-            std::cout << "Queue full.\n";
-    }
 
     return 0;
 }

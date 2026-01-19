@@ -4,6 +4,7 @@
 #include <sys/stat.h>
 #include <sys/fcntl.h>
 #include <errno.h>
+#include <unistd.h>
 #include <string.h>
 
 #include <atomic>
@@ -20,6 +21,7 @@ struct SharedHeader
     std::uint32_t version;
     std::uint64_t capacity;
     std::uint64_t element_size;
+    char schema[256];
     alignas(64) std::atomic<std::uint64_t> read_index;
 };
 

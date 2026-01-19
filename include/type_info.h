@@ -2,9 +2,9 @@
 
 #include <format>
 #include <cstdint>
-#include <stdfloat>
-#include <string_view>
 #include <stdexcept>
+#include <string>
+#include <string_view>
 
 template <typename T>
 consteval std::string_view get_type_str()
@@ -36,21 +36,8 @@ consteval std::string_view get_type_str<std::uint64_t>()
     return "<u8"; 
 }
 
-// c++23 fixed width floating point
-template<>
-consteval std::string_view get_type_str<std::float32_t>()
-{
-    return "<f4";
-}
-
-template<>
-consteval std::string_view get_type_str<std::float64_t>()
-{
-    return "<f8";
-}
-
 template <typename T>
 inline std::string field_to_json(std::string_view name)
 {
-    return std::format("{\"name\": \"{}\", \"type\": \"{}\"}", name, get_type_str<T>());
+    return std::format("{{\"name\": \"{}\", \"type\": \"{}\"}}", name, get_type_str<T>());
 }

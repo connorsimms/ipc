@@ -2,7 +2,10 @@
 
 // #include "shm_header.h"
 #include "shm_segment.h"
+#include "schema.h"
 #include <bit>
+#include <iostream>
+#include <type_traits>
 
 template <typename T>
 class SPSCQueue
@@ -12,8 +15,17 @@ public:
     {
         std::size_t adjusted = std::bit_ceil(capacity);
 
-        header_ = new (segment->get_address()) SharedHeader{0, 0xC0FFEE, 0, adjusted, sizeof(T), 0};
-        
+        header_ = new (segment->get_address()) SharedHeader{0, 0xC0FFEE, 0, adjusted, sizeof(T), {}, 0};
+
+        if constexpr (std::is_fundamental<T>::value)
+        {
+            std::strncpy(header_->schema, std::string(get_type_str<T>()).c_str(), sizeof(header_->schema) - 1);
+        } else
+        {
+            std::strncpy(header_->schema, Schema<T>::get_json().c_str(), sizeof(header_->schema) - 1);
+        }
+        header_->schema[sizeof(header_->schema) - 2] = '\0';
+
         buffer_ = reinterpret_cast<T*>(header_ + 1);
     }
 
@@ -66,6 +78,6 @@ public:
     }
 
 private:
-    SharedHeader* header_{ nullptr };  // bytes 0 - 64
-    T* buffer_{ nullptr };             // bytes 64 + 
+    SharedHeader* header_{ nullptr };  // bytes 0 - x 
+    T* buffer_{ nullptr };             // bytes x + 
 };
