@@ -11,7 +11,7 @@ int main()
     queue.init(&segment, 10u);
 
     
-    std::cout << "Offset info: ";
+    std::cout << "Offset info:\n";
     std::cout << offsetof(SharedHeader, write_index) << '\n';
     std::cout << offsetof(SharedHeader, magic) << '\n';
     std::cout << offsetof(SharedHeader, version) << '\n';
@@ -19,7 +19,7 @@ int main()
     std::cout << offsetof(SharedHeader, element_size) << '\n';
     std::cout << offsetof(SharedHeader, schema) << '\n';
     std::cout << offsetof(SharedHeader, read_index) << '\n';
-
+    std::cout << "SharedHeader size:\n"
     std::cout << sizeof(SharedHeader) << '\n';
 
     return 0;
