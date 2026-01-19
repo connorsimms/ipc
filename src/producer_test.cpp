@@ -19,8 +19,11 @@ int main()
     std::cout << offsetof(SharedHeader, element_size) << '\n';
     std::cout << offsetof(SharedHeader, schema) << '\n';
     std::cout << offsetof(SharedHeader, read_index) << '\n';
-    std::cout << "SharedHeader size:\n"
+    std::cout << "SharedHeader size:\n";
     std::cout << sizeof(SharedHeader) << '\n';
+
+    int x;
+    while (std::cin >> x && x) {}
 
     return 0;
 }

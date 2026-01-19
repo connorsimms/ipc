@@ -1,6 +1,7 @@
 import mmap
 import struct
 import time
+import json
 
 import numpy as np
 
@@ -15,7 +16,8 @@ class Consumer:
         self._version = np.frombuffer(self._mmap, dtype='<u4', count=1, offset=12)
         self._capacity = np.frombuffer(self._mmap, dtype='<u8', count=1, offset=16)
         self._element_size = np.frombuffer(self._mmap, dtype='<u8', count=1, offset=24)
-        self._read_index = np.frombuffer(self._mmap, dtype='<u8', count=1, offset=64)
+        self._schema = np.frombuffer(self._mmap, dtype='U256', count=1, offset=32)
+        self._read_index = np.frombuffer(self._mmap, dtype='<u8', count=1, offset=320)
 
     def __del__(self):
         self._mmap.close()

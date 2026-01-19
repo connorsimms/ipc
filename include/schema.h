@@ -44,3 +44,21 @@ struct Schema
     }
 };
 
+struct Trade
+{
+    std::uint64_t id;
+    std::uint32_t price;
+};
+
+template <>
+struct Schema<Trade>
+{
+    static std::string get_json()
+    {
+        return SchemaBuilder<Trade>()
+                .add("id", &Trade::id)
+                .add("price", &Trade::price)
+                .generate()
+        ;
+    }
+};

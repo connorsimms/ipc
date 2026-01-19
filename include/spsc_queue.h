@@ -24,7 +24,6 @@ public:
         {
             std::strncpy(header_->schema, Schema<T>::get_json().c_str(), sizeof(header_->schema) - 1);
         }
-        header_->schema[sizeof(header_->schema) - 2] = '\0';
 
         buffer_ = reinterpret_cast<T*>(header_ + 1);
     }
