@@ -1,64 +1,54 @@
 #pragma once
 
-#include <vector>
 #include "type_info.h"
+#include <vector>
 
-template <typename T>
-class SchemaBuilder
+template <typename T> class SchemaBuilder
 {
 public:
-    SchemaBuilder() 
-    : json{"[]"}
-    {}
+  SchemaBuilder() : json{"[]"} {}
 
-    template <typename U>
-    SchemaBuilder& add(std::string name, U T::* member)
+  template <typename U> SchemaBuilder &add(std::string name, U T::*member)
+  {
+    if (json.size() == 2)
     {
-        if (json.size() == 2)
-        {
-            json.insert(json.size() - 1, field_to_json<U>(name));
-        }
-        else
-        {
-            json.insert(json.size() - 1, ", " + field_to_json<U>(name));
-        }
-
-        return *this;
+      json.insert(json.size() - 1, field_to_json<U>(name));
+    }
+    else
+    {
+      json.insert(json.size() - 1, ", " + field_to_json<U>(name));
     }
 
-    std::string generate()
-    {
-        return json;
-    }
+    return *this;
+  }
+
+  std::string generate() { return json; }
 
 private:
-    std::string json;
+  std::string json;
 };
 
-template <typename T>
-struct Schema
+template <typename T> struct Schema
 {
-    static std::string get_json()
-    {
-        throw std::invalid_argument("Type does not have Schema");
-    }
+  static std::string get_json()
+  {
+    throw std::invalid_argument("Type does not have Schema");
+  }
 };
 
 struct Trade
 {
-    std::uint64_t id;
-    std::uint32_t price;
+  std::uint64_t id;
+  std::uint32_t price;
 };
 
-template <>
-struct Schema<Trade>
+template <> struct Schema<Trade>
 {
-    static std::string get_json()
-    {
-        return SchemaBuilder<Trade>()
-                .add("id", &Trade::id)
-                .add("price", &Trade::price)
-                .generate()
-        ;
-    }
+  static std::string get_json()
+  {
+    return SchemaBuilder<Trade>()
+        .add("id", &Trade::id)
+        .add("price", &Trade::price)
+        .generate();
+  }
 };
