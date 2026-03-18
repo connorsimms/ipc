@@ -1,7 +1,8 @@
 #pragma once
 
-#include "type_info.h"
 #include <vector>
+
+#include "type_info.hpp"
 
 template <typename T> class SchemaBuilder
 {

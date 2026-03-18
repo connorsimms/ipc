@@ -6,13 +6,12 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <unistd.h>
-
 #include <atomic>
 #include <cerrno>
 #include <string>
 #include <system_error>
 
-#include "type_info.h"
+#include "type_info.hpp"
 
 struct SharedHeader
 {

@@ -1,11 +1,11 @@
 #pragma once
 
-// #include "shm_header.h"
-#include "schema.h"
-#include "shm_segment.h"
 #include <bit>
 #include <iostream>
 #include <type_traits>
+
+#include "schema.hpp"
+#include "shm_segment.hpp"
 
 template <typename T> class SPSCQueue
 {
